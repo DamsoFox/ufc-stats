@@ -8,21 +8,18 @@ ACTIVE_SINCE = pd.Timestamp.today().normalize() - pd.DateOffset(years=2)  # acti
 MIN_FIGHTS = 3                               # minimum de combats UFC pour être classé
 
 DIVS = [  # ordre important : les noms les plus longs d'abord
-    ("Women's Strawweight", "Pailles (F)"), ("Women's Flyweight", "Mouches (F)"),
-    ("Women's Bantamweight", "Coqs (F)"), ("Women's Featherweight", "Plumes (F)"),
-    ("Light Heavyweight", "Mi-lourds"), ("Heavyweight", "Lourds"),
-    ("Middleweight", "Moyens"), ("Welterweight", "Mi-moyens"),
-    ("Lightweight", "Légers"), ("Featherweight", "Plumes"),
-    ("Bantamweight", "Coqs"), ("Flyweight", "Mouches"), ("Strawweight", "Pailles"),
+    "Women's Strawweight", "Women's Flyweight", "Women's Bantamweight", "Women's Featherweight",
+    "Light Heavyweight", "Heavyweight", "Middleweight", "Welterweight",
+    "Lightweight", "Featherweight", "Bantamweight", "Flyweight", "Strawweight",
 ]
-ORDER = [d[1] for d in DIVS]
+ORDER = list(DIVS)
 
 
 def division(w):
     w = str(w)
-    for en, fr in DIVS:
-        if en in w:
-            return fr
+    for d in DIVS:
+        if d in w:
+            return d
     return None  # catch weight, open weight, superfight
 
 
