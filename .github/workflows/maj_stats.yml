@@ -1,0 +1,26 @@
+name: Mise à jour des stats UFC
+
+on:
+  schedule:
+    - cron: "0 6 * * *"   # tous les jours vers 6 h (UTC)
+  workflow_dispatch:       # bouton pour lancer à la main
+
+permissions:
+  contents: write
+
+jobs:
+  maj:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pandas
+      - run: python calcul_stats.py
+      - name: Enregistrer le nouveau fichier
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898699+github-actions[bot]@users.noreply.github.com"
+          git add ufc_stats_par_categorie.csv
+          git diff --staged --quiet || (git commit -m "Mise à jour des stats" && git push)
